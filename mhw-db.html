@@ -5,6 +5,8 @@
 <head>
     <title>ARMOR SET ME</title>
     <link rel="stylesheet" href="mhwstyle.css">
+    <script src="./MHW-DB-Client/ClientURLMaker.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 
@@ -14,12 +16,37 @@
         <!--<form name="search_stuff" onsubmit="search_start()">   -->
         
         <input id="search_input" type="text" placeholder="Search me" onfocus="this.placeholder=''"  onkeyup="search_start()" autocomplete:"off">
-        <ul>
-            <li></li>
-
-        </ul>    
         <!--<input type="submit" id="submittal"  tabindex="-1">-->
-            
+        <ul class= "result" id="result_id">
+        </ul> 
+        <script>
+            async function search_start(){
+                $("ul").empty()
+                const inputVal = document.getElementById("search_input").value + '%'
+                const likeOpQuery = {$like: inputVal}   
+                const searchParamsIn = {"name": likeOpQuery}
+                let data = await (new ClientURLMaker('q',searchParamsIn,'armor/sets')).JSON
+                
+                const uniqueItems = {} // use to avoid duplicates
+                data.forEach(element => {
+                    uniqueItems[element.name] = ''
+                })
+
+                const armorSetsMaxSize = 366
+                if ( data.length == armorSetsMaxSize) {
+                    // search seems to return an additional json with all items
+                    // not sure cause so instead every occurance of a max size return gets
+                    //ignored
+                    console.log('max size hit, do not print')
+                } else {
+                    $("ul").empty()
+                    Object.keys(uniqueItems).forEach(element => {
+                        document.getElementById('result_id').innerHTML += '<li>' + element + '</li>'
+                    })
+                }
+             }
+        </script>
+           
         <!--</form>  --> 
     </div>
     <div class="armor_display">
@@ -32,46 +59,5 @@
     <div class="Jewel_display">
     </div>
 </div>
-<script>
-   async function search_start(){
-        /*somethihng*/
-        console.log('ouch');
-        //alert("you beautiful");
-        var input;
-        const url=new URL('https://mhw-db.com/armor/sets');
-        input=document.getElementById("search_input");
-        console.log(input.value);
-     
-        //---Operators....-----------------------------------------------------------
-        var inputVal=input.value+'%';
-        var inject='{"pieces.name": {"$like": "'+inputVal+'"}}'
-        var injectJson=JSON.parse(inject);
-        //--------------------------
-
-        url.searchParams.set('q',JSON.stringify(injectJson));   
-        let something = await fetch(url)
-            .then(response=> response.json())
-            .then(res=>{
-                console.log(JSON.stringify(injectJson));
-                console.log(res[0].pieces[0].name);
-                console.log(res[0].pieces[1].name);
-                console.log(res[0].pieces[2].name);
-                console.log(res[0].pieces[3].name);
-                console.log(res[0].pieces[4].name);
-                return res[0].pieces;
-             
-            })
-            .catch(function(error){
-            console.log("Error: "+ error);
-        });
-                document.getElementById("search_input").innerHTML = something;
-        
-        //document.getElementById("search_input").innerHTML = //whatever I get back
-    }
-    
-    function display_full(){
-        
-    }
-</script>       
 </body>
 </html>
