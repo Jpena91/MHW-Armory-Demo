@@ -1,0 +1,77 @@
+<!doctype html>
+
+<html>
+
+<head>
+    <title>ARMOR SET ME</title>
+    <link rel="stylesheet" href="mhwstyle.css">
+</head>
+
+
+<body>
+<div class="left"> 
+    <div class="search">
+        <!--<form name="search_stuff" onsubmit="search_start()">   -->
+        
+        <input id="search_input" type="text" placeholder="Search me" onfocus="this.placeholder=''"  onkeyup="search_start()" autocomplete:"off">
+        <ul>
+            <li></li>
+
+        </ul>    
+        <!--<input type="submit" id="submittal"  tabindex="-1">-->
+            
+        <!--</form>  --> 
+    </div>
+    <div class="armor_display">
+    </div>
+</div>
+<div class="right"> 
+    <div class="Skill_display">
+                
+    </div>
+    <div class="Jewel_display">
+    </div>
+</div>
+<script>
+   async function search_start(){
+        /*somethihng*/
+        console.log('ouch');
+        //alert("you beautiful");
+        var input;
+        const url=new URL('https://mhw-db.com/armor/sets');
+        input=document.getElementById("search_input");
+        console.log(input.value);
+     
+        //---Operators....-----------------------------------------------------------
+        var inputVal=input.value+'%';
+        var inject='{"pieces.name": {"$like": "'+inputVal+'"}}'
+        var injectJson=JSON.parse(inject);
+        //--------------------------
+
+        url.searchParams.set('q',JSON.stringify(injectJson));   
+        let something = await fetch(url)
+            .then(response=> response.json())
+            .then(res=>{
+                console.log(JSON.stringify(injectJson));
+                console.log(res[0].pieces[0].name);
+                console.log(res[0].pieces[1].name);
+                console.log(res[0].pieces[2].name);
+                console.log(res[0].pieces[3].name);
+                console.log(res[0].pieces[4].name);
+                return res[0].pieces;
+             
+            })
+            .catch(function(error){
+            console.log("Error: "+ error);
+        });
+                document.getElementById("search_input").innerHTML = something;
+        
+        //document.getElementById("search_input").innerHTML = //whatever I get back
+    }
+    
+    function display_full(){
+        
+    }
+</script>       
+</body>
+</html>

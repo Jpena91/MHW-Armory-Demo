@@ -1,0 +1,71 @@
+/*****************BASEGROUND***************/
+div.left { 
+     display:block;
+     float:left;  
+     //background:Red; 
+     width:60%; 
+     height:1000px; 
+} 
+div.right{ 
+    display:block;
+    float:left;  
+    //background:Green; 
+    width:40%; 
+    height:1000px; 
+} 
+
+/*****************Background***************/
+ div.left div.search{ 
+    display:block;
+    float:left;  
+    background:pink; 
+    width:30%; 
+    height:1000px; 
+} 
+ div.left div.armor_display{ 
+    display:block;
+    float:right;  
+    background:blue; 
+    width:70%; 
+    height:1000px; 
+} 
+
+ div.right div.Skill_display{ 
+    display:block;
+    float:left;  
+    background:yellow; 
+    width:50%; 
+    height:1000px; 
+} 
+div.right div.Jewel_display{
+    display:block;
+    float:right;  
+    background:purple; 
+    width:50%; 
+    height:1000px; 
+} 
+
+
+/*****************2nd_Layer_CAKE************/
+input[type=text]#search_input{
+    margin :8%;
+    background: #322e2d;
+    width:80%;
+    color: white;
+    border-radius: 5px;
+    
+}
+input[type=text] textarea{
+    color:#f3f3f3;
+}
+#search_input::placeholder{
+    font-family: 'myFont', Arial, Helvetica, sans-serif;
+    color: #f3f3f3;
+    opacity: 0.5; 
+}
+#submittal{
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+}
